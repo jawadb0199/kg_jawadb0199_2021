@@ -1,20 +1,27 @@
 import sys
 
 def is_one_to_one(str1: str, str2: str) -> bool:    
-        # Unequal lengths -> false
-        if len(str1) != len(str2):
-            return False
-        
-        # Check that each instance of a char in str1 matches the same char in str2
-        for i in range(len(str1)):
-            c1 = str1[i];
-            c2 = str2[i];
+    # By definition of one-to-one function there can be a char in str2 that
+    # isn't mapped to a char in str1 so str2 can be longer than str1
+    if len(str1) > len(str2):
+        return False
+
+    # Dictionary to store mappings
+    dictionary = dict()
+
+    for i in range(len(str1)):
+        c1 = str1[i];
+        c2 = str2[i];
+        # If char at index i -> False
+        if c1 in dictionary:
+            if c2 != dictionary[c1]:
+                return False
+        # Add new mapping
+        else:
+            dictionary[c1] = c2
             
-            for j in range(len(str2)):
-                if (str1[j] == c1 and str2[j] != c2):
-                    return False
-                    
-        return True
+            
+    return True
 
 def main():
     if len(sys.argv) != 3:
